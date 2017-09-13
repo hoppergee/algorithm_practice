@@ -1,4 +1,4 @@
-class BianrySearchTree
+class BinarySearchTree
   class Node
     attr_reader :key, :left, :right
 
@@ -22,7 +22,7 @@ class BianrySearchTree
   end
 
   def insert(key)
-    @root.nil? ? @root = Node.new(key) : @root.insert(key)
+    @root.nil? @root = Node.new(key) : @root.insert(key)
   end
 
   def in_order(node=@root, &block)
@@ -46,17 +46,17 @@ class BianrySearchTree
     yield node
   end
 
-  def search(node=@root, key)
+  def search(node, key)
     if key < node.key
       search(node.left, key)
     elsif key > node.key
       search(node.right, key)
     else
-      return node
+      node
     end
   end
 
-  def check_height(node)
+  def check_height(node=@root)
     return 0 if node.nil?
 
     leftHeight = check_height(node.left)
@@ -65,9 +65,9 @@ class BianrySearchTree
     rightHeight = check_height(node.right)
     return -1 if rightHeight == -1
 
-    dif = leftHeight - rightHeight
-    if dif.abs > 1
-      return -1
+    diff = leftHeight - rightHeight
+    if diff.abs > 1
+      -1
     else
       [leftHeight, rightHeight].max + 1
     end
@@ -78,29 +78,3 @@ class BianrySearchTree
   end
 end
 
-tree = BianrySearchTree.new
-tree.insert(50)
-tree.insert(25)
-tree.insert(75)
-tree.insert(12)
-tree.insert(37)
-tree.insert(87)
-tree.insert(63)
-puts tree.inspect
-puts "tree.is_balanced?"
-puts tree.is_balanced?
-
-puts "pre_order"
-tree.pre_order do |node|
-  puts node.key
-end
-
-puts "in_order"
-tree.in_order do |node|
-  puts node.key
-end
-
-puts "post_order"
-tree.post_order do |node|
-  puts node.key
-end
